@@ -12,7 +12,7 @@ class Boot
         Console.WriteLine(@" |_____|  \___/  |___/  \___| |_|    \____| |_| |_|  \__,_|  \__|");
         Console.WriteLine(@"------------------CLIENT BOT OFFCIAL FRAMEOWRK------------------");
         Console.WriteLine("------------------------------------------------------------------------------------------------------");
-        Console.WriteLine("欢迎使用LCBOF v1.0.r1.b70\n客户端请注意:正常启动后，仅输出，输入模式请另启动程序（使用-ci附加参数启动程序）\n输入1 启动Bot,输入4发行说明");
+        Console.WriteLine("欢迎使用LCBOF v1.0.r1.b72\n客户端请注意:正常启动后，仅输出，输入模式请另启动程序（使用-ci附加参数启动程序）\n输入1 启动Bot,输入4发行说明");
         while (true)
         {
             if (!int.TryParse(Console.ReadLine(), out int choose))
@@ -58,12 +58,9 @@ class Boot
             }
             else if (choose == 4)
             {
-                Console.WriteLine(@"LCBOF 1.0.r1.b70 发行说明：");
+                Console.WriteLine(@"LCBOF 1.0.r1.b72 发行说明：");
                 Console.WriteLine(@"-------------------------------------");
-                Console.WriteLine(@"新增了服务器配置,不必在启动服务器时手动输入端口号");
-                Console.WriteLine(@"新增了服务器名称命名和服务器描述,并且也可以在服务器配置中配置,无需改动代码");
-                Console.WriteLine(@"修复部分用户使用体验的不良体验");
-                Console.WriteLine(@"这次算是一个小的关键更新吧");
+                Console.WriteLine(@"添加了命令控制机器人、自动执行");
                 Console.WriteLine(@"-------------------------------------");
                 Console.WriteLine(@"一个Losefchat官方出品的客户端机器人框架");
                 Console.WriteLine(@"基于Losefchat3.0.r3.b67");
