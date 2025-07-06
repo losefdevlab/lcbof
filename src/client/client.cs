@@ -9,6 +9,10 @@ namespace LosefDevLab.LosefChat.lcstd
     public partial class Client
     {
         /// <summary>
+        /// 存储消息的列表
+        /// </summary>
+        List<string> messages = new List<string>();
+        /// <summary>
         /// 获取或设置TCP客户端实例
         /// </summary>
         public TcpClient? tcpClient;
@@ -190,8 +194,8 @@ namespace LosefDevLab.LosefChat.lcstd
                 Log($"[Connect] 已发送密码");
 
                 Console.WriteLine(
-                    $"我({username})已加入到服务器({serverIP}:{serverPort})。输入 'exit' 以关闭客户端。\n您的消息发送速度过快的话服务端可能会限制速度");
-                Log($"[Connect Finished successfully]我({username})已加入到服务器。server:{serverIP}:{serverPort}");
+                    $"Bot({username})已加入到服务器({serverIP}:{serverPort})。输入 'exit' 以关闭客户端。\n您的消息发送速度过快的话服务端可能会限制速度");
+                Log($"[Connect Finished successfully]Bot({username})已加入到服务器。server:{serverIP}:{serverPort}");
 
                 ThreadPool.QueueUserWorkItem(state => ReceiveMessage());
                 ThreadPool.QueueUserWorkItem(state => ProcessInput());
@@ -201,9 +205,18 @@ namespace LosefDevLab.LosefChat.lcstd
                 Log($"连接服务器时发生异常: {ex.Message}");
             }
         }
+        
+        /// <summary>Bot自动执行</summary>
+        private void BotAutoExecute()
+        {
+            if ($"{DateTime.Now:MM}{DateTime.Now:dd}" == "0101")
+            {
+                SendMessage("新年快乐!");
+            }
+        }
 
         /// <summary>
-        /// 处理客户端输入、客户端命令的线程方法
+        /// 处理控制者命令的线程方法
         /// </summary>
         private void ProcessInput()
         {
@@ -216,8 +229,7 @@ namespace LosefDevLab.LosefChat.lcstd
                     string msg = reader.ReadToEnd();
                     if (!string.IsNullOrEmpty(msg))
                     {
-                        if (msg.Trim() != "" && msg != "exit") SendMessage(msg);
-                        else if (msg.Trim() == "exit")
+                        if (msg.Trim() == "exit")
                         {
                             SendMessage("我下线了拜拜");
                             Environment.Exit(0);
@@ -226,6 +238,11 @@ namespace LosefDevLab.LosefChat.lcstd
                         {
                             Console.WriteLine("服务器名称 | "+serverName);
                             Console.WriteLine("服务器描述 | "+serverDes);
+                        }
+                        else if (msg.Trim().StartsWith("/send".Trim()))
+                        {
+                            SendMessage(msg.Trim().Substring(6));
+                            
                         }
 
                         using (FileStream fileStreamWrite = new FileStream(inputFilePath, FileMode.Truncate,
@@ -252,7 +269,6 @@ namespace LosefDevLab.LosefChat.lcstd
             bytesRead = clientStream?.Read(message, 0, 32567) ?? 0;
             serverDes = Encoding.UTF8.GetString(message, 0, bytesRead).Trim();
             Log("服务器描述:"+serverDes);
-            List<string> messages = new List<string>();
             while (true)
             {
                 bytesRead = 0;
