@@ -244,6 +244,10 @@ namespace LosefDevLab.LosefChat.lcstd
                             SendMessage(msg.Trim().Substring(6));
                             
                         }
+                        else
+                        {
+                            Console.WriteLine("无效命令输入");
+                        }
 
                         using (FileStream fileStreamWrite = new FileStream(inputFilePath, FileMode.Truncate,
                                    FileAccess.Write, FileShare.ReadWrite))
